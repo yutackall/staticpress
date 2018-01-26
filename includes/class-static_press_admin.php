@@ -336,7 +336,18 @@ jQuery(function($){
 			error: function(xhr, ajaxOptions, thrownError){
 				$('#rebuild').show();
 				$('#loader').remove();
-				$('#rebuild-result').append('<p id="message"><strong><?php echo __('Error!', self::TEXT_DOMAIN);?> (' + xhr.status + ' ' + thrownError + ')</strong></p>');
+				var error_message = null;
+				if (xhr.responseJSON.data) {
+					var ul = $('<ul>')
+					$.each(xhr.responseJSON.data, function(index, error){
+						ul.append($('<li>code: ' + error.code + ", message:" + error.message + '</li>'));
+					});
+					error_message = $('<p id="message"><strong><?php echo __('Error!',   self::TEXT_DOMAIN);?> (' + xhr.status + ')</strong></p>');
+					error_message.append(ul);
+				} else {
+					error_message = '<p id="message"><strong><?php echo __('Error!',   self::TEXT_DOMAIN);?> (' + xhr.status + ' ' + thrownError + ')</strong></p>'
+				}
+				$('#rebuild-result').append(error_message);
 				$('html,body').animate({scrollTop: $('#message').offset().top},'slow');
 				file_count = 0;
 			}
@@ -360,7 +371,7 @@ jQuery(function($){
 			error: function(xhr, ajaxOptions, thrownError){
 				$('#rebuild').show();
 				$('#loader').remove();
-				$('#rebuild-result').append('<p id="message"><strong><?php echo __('Error!',   self::TEXT_DOMAIN);?> (' + xhr.status + ' ' + thrownError + ')</strong></p>');
+				$('#rebuild-result').append('<p id="message"><strong><?php echo __('Error!', self::TEXT_DOMAIN);?> (' + xhr.status + ' ' + thrownError + ')</strong></p>');
 				$('html,body').animate({scrollTop: $('#message').offset().top},'slow');
 				file_count = 0;
 			}
