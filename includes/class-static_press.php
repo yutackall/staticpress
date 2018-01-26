@@ -191,7 +191,7 @@ CREATE TABLE `{$this->url_table}` (
 			$urls = $this->fetch_urls($_POST['post_id']);
 			$this->log_output(print_r($urls, true)); // for debug
 			if (is_wp_error($urls)) {
-				wp_send_json_error($urls);
+				wp_send_json_error($urls, 404);
 			}
 
 			foreach ($urls as $url) {
