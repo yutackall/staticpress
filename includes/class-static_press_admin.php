@@ -337,7 +337,7 @@ jQuery(function($){
 				$('#rebuild').show();
 				$('#loader').remove();
 				var error_message = null;
-				if (xhr.responseJSON.data) {
+				if (xhr.responseJSON && xhr.responseJSON.data) {
 					var ul = $('<ul>')
 					$.each(xhr.responseJSON.data, function(index, error){
 						ul.append($('<li>code: ' + error.code + ", message:" + error.message + '</li>'));
